@@ -1,9 +1,9 @@
 [submodule "externals/governance-v2"]
 	path = externals/governance-v2
 	url = https://github.com/pegasys-fi/governance-v2.git
-[submodule "externals/aave-token-v2"]
-	path = externals/aave-token-v2
+[submodule "externals/psys-token-v2"]
+	path = externals/psys-token-v2
 	url = https://github.com/pegasys-fi/psys-token-v2.git
 [submodule "externals/stake"]
 	path = externals/stake
-	url = https://github.com/pegasys-fi/pegasys-stake.git
+	url = https://github.com/pegasys-fi/staking-module.git

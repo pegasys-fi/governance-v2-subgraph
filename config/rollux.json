@@ -1,9 +1,9 @@
 {
   "network": "syscoin",
-  "aaveGovernanceV2Address": "0x46177D5023f5b374bB42af4742Af4B86175E43E5",
-  "aaveGovernanceV2StartBlock": 14820769,
-  "aaveTokenV2Address": "0x2e4E66249F64cE8e7Ec04Aa7196D3f1c09851B65",
-  "aaveTokenV2StartBlock": 14820769,
-  "aaveStakeTokenAddress": "0x2e4E66249F64cE8e7Ec04Aa7196D3f1c09851B65",
-  "aaveStakeTokenStartBlock": 14820769
+  "pegasysGovernanceV2Address": "0x3b9511dce0d50AE8f15C618Bb8720E7c5c634AD8",
+  "pegasysGovernanceV2StartBlock": 14820769,
+  "psysTokenV2Address": "0x1c5ed8Ff728574faf9a8Cba1E63DC9eBD14Aa9dd",
+  "psysTokenV2StartBlock": 14820769,
+  "pegasysStakeTokenAddress": "0xf18B6F5127433a37BA26B8daCF351BC1d688d50e",
+  "pegasysStakeTokenStartBlock": 14820769
 }

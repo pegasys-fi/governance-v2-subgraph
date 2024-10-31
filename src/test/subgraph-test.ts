@@ -4,7 +4,7 @@ import { GET_DELEGATES } from './query';
 import { utils, ethers, BigNumber } from 'ethers';
 import fetch from 'cross-fetch';
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client/core';
-import { AaveTokenV2__factory } from '../contracts/factories/AaveTokenV2__factory';
+import { PegasysTokenV2__factory } from '../contracts/factories/PegasysTokenV2__factory';
 import { StakedTokenV3__factory } from '../contracts/factories/StakedTokenV3__factory';
 import { Delegate } from '../../generated/schema';
 require('dotenv').config();
@@ -32,14 +32,14 @@ const mainnetProvider = new ethers.providers.JsonRpcBatchProvider(
   `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`
 );
 
-const kovanAaveToken = AaveTokenV2__factory.connect(kovanJson.aaveTokenV2Address, kovanProvider);
+const kovanAaveToken = PegasysTokenV2__factory.connect(kovanJson.psysTokenV2Address, kovanProvider);
 const kovanStkAaveToken = StakedTokenV3__factory.connect(
   kovanJson.aaveStakeTokenAddress,
   kovanProvider
 );
 
-const mainnetAaveToken = AaveTokenV2__factory.connect(
-  mainnetJson.aaveTokenV2Address,
+const mainnetAaveToken = PegasysTokenV2__factory.connect(
+  mainnetJson.psysTokenV2Address,
   mainnetProvider
 );
 const mainnetStkAaveToken = StakedTokenV3__factory.connect(
@@ -159,11 +159,11 @@ async function parseDelegates(delegates: Delegate[], network: Network) {
       } else {
         console.log(
           'VOTING POWER ERROR WITH ' +
-            delegate.id +
-            ' SUBGRAPH: ' +
-            delegate.totalVotingPower +
-            ' : CONTRACT: ' +
-            votingPower
+          delegate.id +
+          ' SUBGRAPH: ' +
+          delegate.totalVotingPower +
+          ' : CONTRACT: ' +
+          votingPower
         );
         console.log(
           'AAVE BALANCE: ' + delegate.aaveBalance + '  STKAAVE BALANCE: ' + delegate.stkAaveBalance
@@ -174,57 +174,57 @@ async function parseDelegates(delegates: Delegate[], network: Network) {
       } else {
         console.log(
           'PROPOSITION POWER ERROR WITH ' +
-            delegate.id +
-            ' SUBGRAPH: ' +
-            delegate.totalPropositionPower +
-            ' : CONTRACT: ' +
-            propositionPower
+          delegate.id +
+          ' SUBGRAPH: ' +
+          delegate.totalPropositionPower +
+          ' : CONTRACT: ' +
+          propositionPower
         );
         console.log(
           'AAVE BALANCE: ' +
-            delegate.aaveBalance +
-            '  STKAAVE BALANCE: ' +
-            delegate.stkAaveBalance +
-            '\n'
+          delegate.aaveBalance +
+          '  STKAAVE BALANCE: ' +
+          delegate.stkAaveBalance +
+          '\n'
         );
       }
     })
   );
   console.log(
     'AAVE BALANCE: ' +
-      aaveBalanceMatchCount +
-      '/' +
-      delegates.length +
-      '  :  ' +
-      (aaveBalanceMatchCount / delegates.length) * 100 +
-      '%'
+    aaveBalanceMatchCount +
+    '/' +
+    delegates.length +
+    '  :  ' +
+    (aaveBalanceMatchCount / delegates.length) * 100 +
+    '%'
   );
   console.log(
     'STKAAVE BALANCE: ' +
-      stkAaveBalanceMatchCount +
-      '/' +
-      delegates.length +
-      '  :  ' +
-      (stkAaveBalanceMatchCount / delegates.length) * 100 +
-      '%'
+    stkAaveBalanceMatchCount +
+    '/' +
+    delegates.length +
+    '  :  ' +
+    (stkAaveBalanceMatchCount / delegates.length) * 100 +
+    '%'
   );
   console.log(
     'VOTING POWER: ' +
-      votingPowerMatchCount +
-      '/' +
-      delegates.length +
-      '  :  ' +
-      (votingPowerMatchCount / delegates.length) * 100 +
-      '%'
+    votingPowerMatchCount +
+    '/' +
+    delegates.length +
+    '  :  ' +
+    (votingPowerMatchCount / delegates.length) * 100 +
+    '%'
   );
   console.log(
     'PROPOSITION POWER: ' +
-      propositionPowerMatchCount +
-      '/' +
-      delegates.length +
-      '  :  ' +
-      (propositionPowerMatchCount / delegates.length) * 100 +
-      '%'
+    propositionPowerMatchCount +
+    '/' +
+    delegates.length +
+    '  :  ' +
+    (propositionPowerMatchCount / delegates.length) * 100 +
+    '%'
   );
   console.log('\n');
 }

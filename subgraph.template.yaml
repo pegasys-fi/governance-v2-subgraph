@@ -1,16 +1,16 @@
 specVersion: 0.0.2
-description: Aave governance V2 subgraph
-repository: https://github.com/aave/governance-delegation-subgraph
+description: Pegasys governance V2 subgraph
+repository: https://github.com/pegasys-fi/governance-v2-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: AaveGovernanceV2
-    network: {{network}}
+    name: PegasysGovernanceV2
+    network: { { network } }
     source:
-      abi: AaveGovernanceV2
-      address: '{{aaveGovernanceV2Address}}'
-      startBlock: {{aaveGovernanceV2StartBlock}}
+      abi: PegasysGovernanceV2
+      address: '{{pegasysGovernanceV2Address}}'
+      startBlock: { { pegasysGovernanceV2StartBlock } }
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -20,8 +20,8 @@ dataSources:
         - Vote
         - Executor
       abis:
-        - name: AaveGovernanceV2
-          file: ./externals/governance-v2/artifacts/contracts/governance/AaveGovernanceV2.sol/AaveGovernanceV2.json
+        - name: PegasysGovernanceV2
+          file: ./externals/governance-v2/artifacts/contracts/governance/PegasysGovernanceV2.sol/PegasysGovernanceV2.json
         - name: IExecutor
           file: ./externals/governance-v2/artifacts/contracts/governance/Executor.sol/Executor.json
         - name: GovernanceStrategy
@@ -43,12 +43,12 @@ dataSources:
           handler: handleExecutorUnauthorized
       file: ./src/mapping/governance.ts
   - kind: ethereum/contract
-    name: AaveTokenV2
-    network: {{network}}
+    name: PegasysTokenV2
+    network: { { network } }
     source:
-      abi: AaveTokenV2
-      address: "{{aaveTokenV2Address}}"
-      startBlock: {{aaveTokenV2StartBlock}}
+      abi: PegasysTokenV2
+      address: '{{psysTokenV2Address}}'
+      startBlock: { { psysTokenV2StartBlock } }
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -56,21 +56,21 @@ dataSources:
       entities:
         - Delegate
       abis:
-        - name: AaveTokenV2
-          file: ./externals/aave-token-v2/artifacts/contracts/token/AaveTokenV2.sol/AaveTokenV2.json
+        - name: PegasysTokenV2
+          file: ./externals/psys-token-v2/artifacts/contracts/token/PegasysTokenV2.sol/PegasysTokenV2.json
       eventHandlers:
         - event: DelegateChanged(indexed address,indexed address,uint8)
           handler: handleDelegateChanged
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping/aave-token.ts
+      file: ./src/mapping/psys-token.ts
   - kind: ethereum/contract
     name: StakedTokenV3
-    network: {{network}}
+    network: { { network } }
     source:
       abi: StakedTokenV3
-      address: "{{aaveStakeTokenAddress}}"
-      startBlock: {{aaveStakeTokenStartBlock}}
+      address: '{{pegasysStakeTokenAddress}}'
+      startBlock: { { pegasysStakeTokenStartBlock } }
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

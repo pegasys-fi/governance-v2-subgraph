@@ -1,5 +1,5 @@
 import { BigInt, log } from '@graphprotocol/graph-ts';
-import { DelegateChanged, Transfer } from '../../generated/AaveTokenV2/AaveTokenV2';
+import { DelegateChanged, Transfer } from '../../generated/PegasysTokenV2/PegasysTokenV2';
 import { Delegate, Delegation } from '../../generated/schema';
 import { getOrInitDelegate } from '../helpers/initializers';
 import {
