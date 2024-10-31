@@ -4,18 +4,18 @@
   "description": "This package contains governance subgraph for the Pegasys Governance V2",
   "scripts": {
     "prepare:all": "npm run prepare:contracts && npm run prepare:subgraph",
-    "prepare:subgraph": "mustache ./config/${NETWORK:-syscoin}.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "prepare:subgraph": "mustache ./config/syscoin.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "prepare:contracts": "rm -rf externals && npm run submodule:get:governance-v2 && npm run submodule:get:psys-token-v2 && npm run submodule:get:stake && npm run submodule:install && npm run submodule:compile-contracts",
     "submodule:get:governance-v2": "git submodule add -f https://github.com/pegasys-fi/governance-v2.git externals/governance-v2",
     "submodule:get:psys-token-v2": "git submodule add -f https://github.com/pegasys-fi/psys-token-v2.git externals/psys-token-v2",
     "submodule:get:stake": "git submodule add -f https://github.com/pegasys-fi/staking-module.git externals/stake",
     "submodule:install": "git submodule foreach npm install",
     "submodule:load": "git submodule foreach npm run load:npm",
-    "submodule:compile-contracts": "git submodule foreach npm run compile --force",
+    "submodule:compile-contracts": "git submodule foreach npm run compile -- --force",
     "codegen": "graph codegen --output-dir ./generated",
     "build": "graph build",
     "create": "graph create pollum-io/governance-v2 --node https://rollux.graph.pegasys.fi/deploy",
-    "deploy": "graph deploy pollum-io/governance-v2 --node https://rollux.graph.pegasys.fi/deploy --ipfs https://rollux.ipfs.pegasys.fi/  --debug",
+    "deploy": "graph deploy pollum-io/governance-v2 --node https://rollux.graph.pegasys.fi/deploy --ipfs https://rollux.ipfs.pegasys.fi/",
     "generate-types": "typechain --target=ethers-v5 --out-dir src/contracts 'externals/psys-token-v2/artifacts/contracts/token/PegasysTokenV2.sol/PegasysTokenV2.json' 'externals/stake/artifacts/contracts/stake/StakedTokenV3.sol/StakedTokenV3.json'",
     "test-rollux": "ts-node src/test/subgraph-test.ts Rollux"
   },
@@ -42,7 +42,7 @@
     "sha3": "^2.1.4"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.73.0",
+    "@graphprotocol/graph-cli": "^0.87.0",
     "@graphprotocol/graph-ts": "^0.25.0",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",

@@ -10,7 +10,7 @@ import {
 } from '../utils/constants';
 import { Delegate, Delegation } from '../../generated/schema';
 import { toDecimal } from '../utils/converters';
-import { DelegateChanged, Transfer } from '../../generated/StakedTokenV3/StakedTokenV3';
+import { DelegateChanged, Transfer } from '../../generated/StakedPSYSV3/StakedPSYSV3';
 
 enum PowerType {
   Voting,

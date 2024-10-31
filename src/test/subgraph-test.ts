@@ -5,7 +5,7 @@ import { utils, ethers, BigNumber } from 'ethers';
 import fetch from 'cross-fetch';
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client/core';
 import { PegasysTokenV2__factory } from '../contracts/factories/PegasysTokenV2__factory';
-import { StakedTokenV3__factory } from '../contracts/factories/StakedTokenV3__factory';
+import { StakedPSYSV3__factory } from '../contracts/factories/StakedPSYSV3__factory';
 import { Delegate } from '../../generated/schema';
 require('dotenv').config();
 
@@ -33,7 +33,7 @@ const mainnetProvider = new ethers.providers.JsonRpcBatchProvider(
 );
 
 const kovanAaveToken = PegasysTokenV2__factory.connect(kovanJson.psysTokenV2Address, kovanProvider);
-const kovanStkAaveToken = StakedTokenV3__factory.connect(
+const kovanStkAaveToken = StakedPSYSV3__factory.connect(
   kovanJson.aaveStakeTokenAddress,
   kovanProvider
 );
@@ -42,7 +42,7 @@ const mainnetAaveToken = PegasysTokenV2__factory.connect(
   mainnetJson.psysTokenV2Address,
   mainnetProvider
 );
-const mainnetStkAaveToken = StakedTokenV3__factory.connect(
+const mainnetStkAaveToken = StakedPSYSV3__factory.connect(
   mainnetJson.aaveStakeTokenAddress,
   mainnetProvider
 );

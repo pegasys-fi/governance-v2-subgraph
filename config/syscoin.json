@@ -1,9 +1,9 @@
 {
   "network": "syscoin",
   "pegasysGovernanceV2Address": "0x3b9511dce0d50AE8f15C618Bb8720E7c5c634AD8",
-  "pegasysGovernanceV2StartBlock": 14820769,
+  "pegasysGovernanceV2StartBlock": 21520270,
   "psysTokenV2Address": "0x1c5ed8Ff728574faf9a8Cba1E63DC9eBD14Aa9dd",
-  "psysTokenV2StartBlock": 14820769,
+  "psysTokenV2StartBlock": 21520086,
   "pegasysStakeTokenAddress": "0xf18B6F5127433a37BA26B8daCF351BC1d688d50e",
-  "pegasysStakeTokenStartBlock": 14820769
+  "pegasysStakeTokenStartBlock": 21520173
 }

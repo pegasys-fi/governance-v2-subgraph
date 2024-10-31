@@ -8,8 +8,8 @@ import {
   NA,
 } from '../utils/constants';
 import { Proposal, Vote, Executor } from '../../generated/schema';
-import { IExecutor } from '../../generated/AaveGovernanceV2/IExecutor';
-import { GovernanceStrategy } from '../../generated/AaveGovernanceV2/GovernanceStrategy';
+import { IExecutor } from '../../generated/PegasysGovernanceV2/IExecutor';
+import { GovernanceStrategy } from '../../generated/PegasysGovernanceV2/GovernanceStrategy';
 import {
   ProposalCreated,
   VoteEmitted,
@@ -18,7 +18,7 @@ import {
   ProposalCanceled,
   ExecutorAuthorized,
   ExecutorUnauthorized,
-} from '../../generated/AaveGovernanceV2/AaveGovernanceV2';
+} from '../../generated/PegasysGovernanceV2/PegasysGovernanceV2';
 import { getOrInitProposal, getOrInitDelegate } from '../helpers/initializers';
 
 function getProposal(proposalId: string, fn: string): Proposal | null {
@@ -49,23 +49,25 @@ export function handleProposalCreated(event: ProposalCreated): void {
     discussions = data.get('discussions');
     aipNumber = data.get('aip');
   }
+
   let proposal = getOrInitProposal(event.params.id.toString());
-  if (title) {
+
+  if (title && !title.isNull()) {
     proposal.title = title.toString();
   }
-  if (author) {
+  if (author && !author.isNull()) {
     proposal.author = author.toString();
   }
-  if (!discussions.isNull() && discussions.kind == JSONValueKind.STRING) {
+  if (discussions && !discussions.isNull() && discussions.kind == JSONValueKind.STRING) {
     proposal.discussions = discussions.toString();
   }
-  if (!aipNumber.isNull() && aipNumber.kind == JSONValueKind.NUMBER) {
+  if (aipNumber && !aipNumber.isNull() && aipNumber.kind == JSONValueKind.NUMBER) {
     proposal.aipNumber = aipNumber.toBigInt();
   }
-  if (shortDescription) {
+  if (shortDescription && !shortDescription.isNull()) {
     proposal.shortDescription = shortDescription.toString();
   }
-  if (description) {
+  if (description && !description.isNull()) {
     proposal.description = description.toString();
   }
 
@@ -81,7 +83,14 @@ export function handleProposalCreated(event: ProposalCreated): void {
   creator.save();
   proposal.user = creator.id;
   proposal.executor = event.params.executor.toHexString();
-  proposal.targets = event.params.targets as Bytes[];
+
+  // Fix the targets conversion
+  let targets: Bytes[] = [];
+  for (let i = 0; i < event.params.targets.length; i++) {
+    targets.push(event.params.targets[i] as Bytes);
+  }
+  proposal.targets = targets;
+
   proposal.values = event.params.values;
   proposal.signatures = event.params.signatures;
   proposal.calldatas = event.params.calldatas;
@@ -150,21 +159,21 @@ export function handleVoteEmitted(event: VoteEmitted): void {
 
   let voterDel = getOrInitDelegate(event.params.voter.toHexString(), false);
 
-  // checking if the voter was a delegate already accounted for, if not we should log an error
-  // since it shouldn't be possible for a delegate to vote without first being "created"
   if (voterDel == null) {
     log.error('Delegate {} not found on VoteCast. tx_hash: {}', [
       event.params.voter.toHexString(),
       event.transaction.hash.toHexString(),
     ]);
+    // Create new delegate if it doesn't exist
+    voterDel = getOrInitDelegate(event.params.voter.toHexString());
   }
 
-  // Creating it anyway since we will want to account for this event data, even though it should've never happened
-  voterDel = getOrInitDelegate(event.params.voter.toHexString());
   voterDel.numVotes = voterDel.numVotes + 1;
   voterDel.save();
+
+  // Create new Vote entity
   let id = event.params.voter.toHexString() + ':' + event.params.id.toString();
-  let vote = Vote.load(id) || new Vote(id);
+  let vote = new Vote(id);
   vote.proposal = event.params.id.toString();
   vote.support = event.params.support;
   vote.user = voterDel.id;

@@ -6,14 +6,14 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: PegasysGovernanceV2
-    network: { { network } }
+    network: '{{network}}'
     source:
       abi: PegasysGovernanceV2
       address: '{{pegasysGovernanceV2Address}}'
-      startBlock: { { pegasysGovernanceV2StartBlock } }
+      startBlock: '{{pegasysGovernanceV2StartBlock}}'
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - Proposal
@@ -44,14 +44,14 @@ dataSources:
       file: ./src/mapping/governance.ts
   - kind: ethereum/contract
     name: PegasysTokenV2
-    network: { { network } }
+    network: '{{network}}'
     source:
       abi: PegasysTokenV2
       address: '{{psysTokenV2Address}}'
-      startBlock: { { psysTokenV2StartBlock } }
+      startBlock: '{{psysTokenV2StartBlock}}'
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - Delegate
@@ -65,21 +65,21 @@ dataSources:
           handler: handleTransfer
       file: ./src/mapping/psys-token.ts
   - kind: ethereum/contract
-    name: StakedTokenV3
-    network: { { network } }
+    name: StakedPSYSV3
+    network: '{{network}}'
     source:
-      abi: StakedTokenV3
+      abi: StakedPSYSV3
       address: '{{pegasysStakeTokenAddress}}'
-      startBlock: { { pegasysStakeTokenStartBlock } }
+      startBlock: '{{pegasysStakeTokenStartBlock}}'
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
         - Delegate
       abis:
-        - name: StakedTokenV3
-          file: ./externals/stake/artifacts/contracts/stake/StakedTokenV3.sol/StakedTokenV3.json
+        - name: StakedPSYSV3
+          file: ./externals/stake/artifacts/contracts/stake/StakedPSYSV3.sol/StakedPSYSV3.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
